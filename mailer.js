@@ -15,15 +15,15 @@ const sendLawyerMail = async (email, data) => {
   const text = `
 You’ve received a new appointment request via FairlySettled.
 
-Name: ${customer_name}
+Client: ${customer_name}
 Email: ${customer_email}
-Phone: ${customer_phone}
+Contact: ${customer_phone}
 Date: ${date}
 Time: ${time}
 Service: ${service}
-Message: ${message}
+Note: ${message}
 
-Please respond to the client as soon as possible.
+Kindly reach out to the client at your earliest convenience.
 — FairlySettled
 `;
 
@@ -42,10 +42,10 @@ Please respond to the client as soon as possible.
     >
       <tr>
         <td style="text-align: left;">
-          <h2 style="color: #333333;">New Appointment Request</h2>
+          <h2 style="color: #333333;">📝 Appointment Details via FairlySettled</h2>
           <p style="font-size: 16px; color: #444;">Hello,</p>
           <p style="font-size: 16px; color: #444;">
-            You’ve received a new appointment request via FairlySettled.
+            You’ve received an appointment scheduled through FairlySettled.
           </p>
 
           <table
@@ -54,7 +54,7 @@ Please respond to the client as soon as possible.
             cellspacing="0"
           >
             <tr>
-              <td style="padding: 8px; font-weight: bold; color: #333;">Name:</td>
+              <td style="padding: 8px; font-weight: bold; color: #333;">Client:</td>
               <td style="padding: 8px; color: #444;">${customer_name}</td>
             </tr>
             <tr style="background-color: #f9f9f9;">
@@ -62,7 +62,7 @@ Please respond to the client as soon as possible.
               <td style="padding: 8px; color: #444;">${customer_email}</td>
             </tr>
             <tr>
-              <td style="padding: 8px; font-weight: bold; color: #333;">Phone:</td>
+              <td style="padding: 8px; font-weight: bold; color: #333;">Contact:</td>
               <td style="padding: 8px; color: #444;">${customer_phone}</td>
             </tr>
             <tr style="background-color: #f9f9f9;">
@@ -78,13 +78,13 @@ Please respond to the client as soon as possible.
               <td style="padding: 8px; color: #444;">${service}</td>
             </tr>
             <tr>
-              <td style="padding: 8px; font-weight: bold; color: #333;">Message:</td>
+              <td style="padding: 8px; font-weight: bold; color: #333;">Note:</td>
               <td style="padding: 8px; color: #444; white-space: pre-wrap;">${message}</td>
             </tr>
           </table>
 
           <p style="margin-top: 20px; font-size: 14px; color: #888;">
-            Please respond to the client as soon as possible.
+           Kindly reach out to the client at your earliest convenience.
           </p>
 
           <p style="font-size: 14px; color: #999; margin-top: 30px;">
@@ -106,13 +106,28 @@ Please respond to the client as soon as possible.
 };
 
 const sendClientMail = async (email, data) => {
-      const { customer_name, lawyer_name, date, time, service } = data;
+  const { customer_name, lawyer_name, date, time, service } = data;
+
+  const text = `
+Hi ${customer_name},
+
+Thanks for reaching out through FairlySettled. Your appointment has been noted, and our team will be in touch shortly.
+
+Lawyer: ${lawyer_name}
+Date: ${date}
+Time: ${time}
+Service: ${service}
+
+We'll be in touch shortly to confirm everything.
+
+– FairlySettled Team
+  `;
 
   const html = `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Appointment Request Received</title>
+    <title>Appointment Confirmation</title>
   </head>
   <body style="margin: 0; padding: 0; background-color: #f5f5f5;">
     <table
@@ -122,37 +137,40 @@ const sendClientMail = async (email, data) => {
       cellspacing="0"
     >
       <tr>
-        <td style="text-align: left;">
-          <h2 style="color: #1A73E8;">✅ Appointment Request Received</h2>
-          <p style="font-size: 16px; color: #444;">
-            Hi ${customer_name},
-          </p>
+        <td>
+          <h2 style="color: #1A73E8;">✅ We've Received Your Details</h2>
+          <p style="font-size: 16px; color: #444;">Hi ${customer_name},</p>
 
           <p style="font-size: 16px; color: #444;">
-            Thank you for booking an appointment. Your request has been received and is being processed.
+            Thanks for reaching out through FairlySettled. Your appointment has been noted, and our team will be in touch shortly.
           </p>
 
           <h3 style="margin-top: 20px; color: #333;">📋 Appointment Summary:</h3>
           <table style="margin-top: 10px; width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0">
             <tr>
               <td style="padding: 8px; font-weight: bold; color: #333;">Lawyer:</td>
-              <td style="padding: 8px; color: #444;">${lawyer_name}<td>
+              <td style="padding: 8px; color: #444;">${lawyer_name}</td>
             </tr>
             <tr style="background-color: #f9f9f9;">
               <td style="padding: 8px; font-weight: bold; color: #333;">Date:</td>
               <td style="padding: 8px; color: #444;">${date}</td>
-         </tr>
+            </tr>
             <tr>
               <td style="padding: 8px; font-weight: bold; color: #333;">Time:</td>
               <td style="padding: 8px; color: #444;">${time}</td>
-         </tr>
+            </tr>
             <tr style="background-color: #f9f9f9;">
               <td style="padding: 8px; font-weight: bold; color: #333;">Service:</td>
-              <td style="padding: 8px; color: #444;">${service}</td>            </tr>
+              <td style="padding: 8px; color: #444;">${service}</td>
+            </tr>
           </table>
 
           <p style="margin-top: 20px; font-size: 14px; color: #444;">
-            You will be contacted shortly to confirm the appointment. If you have any questions, feel free to reply to this email.
+            We’ll follow up to confirm your appointment. If you have any questions, you're welcome to contact us.
+          </p>
+
+          <p style="font-size: 14px; color: #999; margin-top: 30px;">
+            – FairlySettled Team
           </p>
         </td>
       </tr>
@@ -160,7 +178,14 @@ const sendClientMail = async (email, data) => {
   </body>
 </html>
 `;
-  await transport.sendMail({ from: process.env.Gmail, to: email, subject: "Appointment Received", html });
+
+  await transport.sendMail({
+    from: `"FairlySettled Team" <${process.env.Gmail}>`,
+    to: email,
+    subject: `Thanks ${customer_name}, we've noted your appointment`,
+    text,
+    html,
+  });
 };
 
 module.exports = { sendLawyerMail, sendClientMail };
